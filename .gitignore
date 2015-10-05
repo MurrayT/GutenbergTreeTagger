@@ -1,0 +1,10 @@
+TreeTagger/
+bin/
+include/
+lib/
+man/
+pip-selfcheck.json
+pyvenv.cfg
+share/
+.ipynb_checkpoints/
+.DS_Store
