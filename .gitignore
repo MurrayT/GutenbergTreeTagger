@@ -8,3 +8,6 @@ pyvenv.cfg
 share/
 .ipynb_checkpoints/
 .DS_Store
+raw/
+preprocessed/
+tagged/
