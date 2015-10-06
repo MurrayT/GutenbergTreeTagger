@@ -7,6 +7,7 @@ FINALDIRNAME=final
 SCRIPTDIR=script
 FORBIDDENDIR=forbidden
 TAGGERDIR=../TreeTagger/cmd
+nolines=15
 
 DIRS=( $TAGGEDDIRNAME $FINALDIRNAME )
 
@@ -24,10 +25,27 @@ if [ "$1" = "pp" ]; then
             for text in $( ls $RAWDIR ); do
                 outfile=./$PPDIR/$text
                 if [ ! -e $outfile ]; then # only process if not already done
+                    clear
                     msg="Stripping Headers and Footers from $text"
                     echo $msg
                     infile=./$RAWDIR/$text
                     ./$SCRIPTDIR/stripgutenberg.pl < $infile > $outfile
+                    echo "-------------------"
+                    head -$nolines $outfile | cat -n
+                    echo "Start of Text: "
+                    read lineno
+                    lineno=`expr $lineno - 1`
+                    sed  "1,$lineno d" $outfile > $outfile.tmp;
+                    echo "--------------------"
+                    tail -$nolines $outfile.tmp | cat -n
+                    echo "End of Text: "
+                    read lineno
+                    nl=$(wc -l $outfile.tmp | awk '{print($1)}')
+                    st=$(echo $nl | awk "{print(\$1 - $nolines +1+ $lineno)}")
+                    cmd="$st,${nl} d"
+                    echo $cmd
+                    sed "$cmd" $outfile.tmp > $outfile
+                    rm $outfile.tmp
                 fi
             done
         done
