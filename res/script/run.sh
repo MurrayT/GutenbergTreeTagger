@@ -7,7 +7,7 @@ FINALDIRNAME=final
 SCRIPTDIR=script
 FORBIDDENDIR=forbidden
 TAGGERDIR=../TreeTagger/cmd
-nolines=15
+nolines=50
 
 DIRS=( $TAGGEDDIRNAME $FINALDIRNAME )
 
